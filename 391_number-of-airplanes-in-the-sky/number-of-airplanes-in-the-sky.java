@@ -23,36 +23,33 @@ class Solution {
      */
     public int countOfAirplanes(List<Interval> airplanes) {
         // write your code here
-        int min = Integer.MAX_VALUE;
-        int max = 0;
-        HashMap<Integer, Integer> startMap = new HashMap<Integer, Integer>();
-        HashMap<Integer, Integer> endMap = new HashMap<Integer, Integer>();
-
-        for (Interval airplane : airplanes) {
-            if (airplane.start < min) {
-                min = airplane.start;
-            }
-            if (airplane.end > max) {
-                max = airplane.end;
-            }
-            int val = startMap.get(airplane.start) == null ? 0 : startMap.get(airplane.start);
-            startMap.put(airplane.start, val + 1);
-            val = endMap.get(airplane.end) == null ? 0 : endMap.get(airplane.end);
-            endMap.put(airplane.end, val + 1);
+        int [] startArray = new int [airplanes.size()];
+        int [] endArray = new int [airplanes.size()];
+        for (int i = 0; i < airplanes.size(); i++) {
+            startArray[i] = airplanes.get(i).start;
+            endArray[i] = airplanes.get(i).end;
         }
-
+        Arrays.sort(startArray);
+        Arrays.sort(endArray);
         int count = 0;
-        int maxplanes = 0;
-        for (int i = min; i <= max; i++) {
-            //对于每个时间点，优先降落
-            int end = endMap.get(i) == null ? 0 : endMap.get(i);
-            count -= end;
-            int start = startMap.get(i) == null ? 0 : startMap.get(i);
-            count += start;
-            if (count > maxplanes) {
-                maxplanes = count;
+        int max = 0;
+        int i = 0;
+        int j = 0;
+        while (i < airplanes.size()) {
+            if (startArray[i] < endArray[j]) {
+                count++;
+                i++;
+            } else if (startArray[i] == endArray[j]) {
+                i++;
+                j++;
+            } else {
+                count--;
+                j++;
+            }
+            if (count > max) {
+                max = count;
             }
         }
-        return maxplanes;
+        return max;
     }
 }
