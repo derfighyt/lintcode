@@ -1,2 +1,3 @@
 # lintcode
 lintcode exercise
+test
