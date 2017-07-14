@@ -16,6 +16,7 @@ public class Solution {
      */
     public ListNode mergeKLists(List<ListNode> lists) {
         // write your code here
+        //分治，复杂度nklogk
         if (lists == null || lists.size() == 0) {
             return null;
         }
