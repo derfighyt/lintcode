@@ -6,15 +6,14 @@ class Solution {
      */
     public int updateBits(int n, int m, int i, int j) {
         // write your code here
-        int ones = ~0;  //将所有的位置为1
         int mask;
-        if (j < 31) {
-            mask = ones << (j+1);   //将0到j位都置为0
-            mask |= ((1<<i) - 1);    //将i到j位置为0，其余位为1;
+        if (j - i < 31) {
+            mask = ((1<<(j - i + 1)) - 1);
         } else {
-            mask = ((1<<i) - 1);    //此时j = 32;
+            mask = 0;
         }
-
+        mask = mask << i;
+        mask = ~mask;
         return (n & mask) | (m<<i) ;
     }
 }
