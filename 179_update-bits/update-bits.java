@@ -6,17 +6,16 @@ class Solution {
      */
     public int updateBits(int n, int m, int i, int j) {
         // write your code here
-        int x = 1;
-        for (int k = i; k < j; k++){
-            x = x << 1;
-            x += 1;
+        int ones = ~0;  //将所有的位置为1
+        int mask;
+        if (j < 31) {
+            mask = ones << (j+1);   //将0到j位都置为0
+            mask |= ((1<<i) - 1);    //将i到j位置为0，其余位为1;
+        } else {
+            mask = ((1<<i) - 1);    //此时j = 32;
         }
-        x = x << i;
-        x = -x - 1;
-        x = x & n;
-        m = m << i;
-        x = x | m;
-        return x;
+
+        return (n & mask) | (m<<i) ;
     }
 }
 // 给出两个32位的整数N和M，以及两个二进制位的位置i和j。写一个方法来使得N中的第i到j位等于M（M会是N中从第i为开始到第j位的子串）
