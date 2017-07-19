@@ -3,29 +3,31 @@ public class Solution {
      * @param n a number
      * @return Gray code
      */
-    public ArrayList<Integer> grayCode(int n) {
-        // Write your code here
-        int base = 0;
-        ArrayList<Integer> result = new ArrayList();
-        result.add(base);
+     public ArrayList<Integer> grayCode(int n) {
+         ArrayList<Integer> result = new ArrayList<Integer>();
+         if (n <= 1) {
+             for (int i = 0; i <= n; i++){
+                 result.add(i);
+             }
+             return result;
+         }
+         result = grayCode(n - 1);
+         ArrayList<Integer> r1 = reverse(result);
+         int x = 1 << (n-1);
+         for (int i = 0; i < r1.size(); i++) {
+             r1.set(i, r1.get(i) + x);
+         }
+         result.addAll(r1);
+         return result;
+     }
 
-        List<Integer> changeBit = new ArrayList();
-        for (int i = 1; i <= n; i++) {
-            int start = changeBit.size();
-            changeBit.add(i);
-            changeBit.addAll(changeBit.subList(0, changeBit.size() - 1));
-            for (int j = start; j < changeBit.size(); j++) {//变换对应的位
-                int bit = changeBit.get(j);
-                if ((base & 1 << (bit - 1)) == 0) {//相应位为0，变成1
-                    base = base | 1 << (bit - 1);
-                } else {//相应位为1，变成0
-                    base = base & ((~0 << bit) ^ (1 << (bit - 1) - 1));
-                }
-                result.add(base);
-            }
-        }
-        return result;
-    }
+     public ArrayList<Integer> reverse (ArrayList<Integer> r) {
+         ArrayList<Integer> rev = new ArrayList<Integer>();
+         for (int i = r.size() - 1; i >= 0; i--) {
+             rev.add(r.get(i));
+         }
+         return rev;
+     }
 }
 
 // 格雷编码是一个二进制数字系统，在该系统中，两个连续的数值仅有一个二进制的差异。
