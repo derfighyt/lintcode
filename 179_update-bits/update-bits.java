@@ -10,7 +10,7 @@ class Solution {
         if (j - i < 31) {
             mask = ((1<<(j - i + 1)) - 1);
         } else {
-            mask = 0;
+            mask = ~0;
         }
         mask = mask << i;
         mask = ~mask;
