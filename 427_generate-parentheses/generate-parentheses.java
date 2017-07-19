@@ -29,7 +29,6 @@ public class Solution {
  		    helper(result, paren + ")", left, right - 1);
          }
  	}
-
 }
 // 给定 n 对括号，请写一个函数以将其生成新的括号组合，并返回所有组合结果。
 // 样例
