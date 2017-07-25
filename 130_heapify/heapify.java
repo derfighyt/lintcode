@@ -6,15 +6,30 @@ public class Solution {
     public void heapify(int[] A) {
         // write your code here
         int n = A.length;
-        for (int i = 0; i < n; i++) {
-            int left = i * 2 + 1;
-            int right = i * 2 + 2;
-
+        for (int i = (n - 1) / 2; i >= 0; i--) {
+            shiftDown(A, i);
         }
     }
 
-    public void helper(int[] A, int root) {
+    public void shiftUp(int[] A, int x) {
+        //
+    }
 
+    public void shiftDown(int[] A, int x) {
+        int n = A.length;
+        int y = x * 2 + 1;
+        while (y < n) {
+            if (y + 1 < n && A[y + 1] < A[y]) { //判断右子节点是否更小
+                y++;
+            }
+            if (A[y] < A[x]) {//需要交换
+                swap(A, x, y);
+                x = y;
+                y = x * 2 + 1;
+            } else {
+                break;
+            }
+        }
     }
 
     public void swap(int[] A, int i, int j) {
