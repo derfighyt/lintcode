@@ -5,17 +5,17 @@ public class Solution {
      */
     public boolean canJump(int[] A) {
         // wirte your code here
-        int n = A.length;
-        boolean[] canReach = new boolean[n];
-        canReach[0] = true;
-        for (int i = 0; i < n - 1; i++) {
-            if (canReach[i]) {
-                for (int j = i + 1; j < i + A[i] && j < n; j++) {
-                    canReach[j] = true;
-                }
+        if (A == null || A.length == 0) {
+            return false;
+        }
+        int farthest = A[0];
+        for (int i = 1; i < A.length; i++) {
+            if (i <= farthest && A[i] + i >= farthest) {
+                farthest = A[i] + i;
             }
         }
-        return canReach[n - 1];
+        return farthest >= A.length - 1;
+
     }
 }
 // 给出一个非负整数数组，你最初定位在数组的第一个位置。　　　
