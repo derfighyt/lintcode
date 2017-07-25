@@ -15,7 +15,6 @@ public class Solution {
             }
         }
         return farthest >= A.length - 1;
-
     }
 }
 // 给出一个非负整数数组，你最初定位在数组的第一个位置。　　　
