@@ -5,22 +5,23 @@ public class Solution {
      */
     public int jump(int[] A) {
         // write your code here
-        int n = A.length;
-        int[] canReach = new int[n];
-        int farest = A[0];
-        if (farest >= n - 1) {
-            return 1;
+        if (A == null || A.length == 0) {
+            return -1;
         }
-        for (int i = 1; i < n; i++) {
-            int minStep = Integer.MAX_VALUE;
-            for (int j = i - 1; j >= 0; j--) {
-                if (A[j] + j >= i) {
-                    minStep = Math.min(minStep, canReach[j] + 1);
+        int start = 0, end = 0, jumps = 0;
+        while (end < A.length - 1) {
+            jumps++;
+            int farthest = end;
+            for (int i = start; i <= end; i++) {
+                if (A[i] + i > farthest) {
+                    farthest = A[i] + i;
                 }
             }
-            canReach[i] = minStep;
+            start = end + 1;
+            end = farthest;
         }
-        return canReach[n - 1];
+        return jumps;
+
     }
 }
 // 给出一个非负整数数组，你最初定位在数组的第一个位置。
