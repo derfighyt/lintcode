@@ -17,11 +17,16 @@ public class Solution {
      */
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode A, TreeNode B) {
         // write your code here
-
-        Queue<TreeNode> queue = new LinkedList();
-        queue.add(root);
-
-
+        if (root == null || root == A || root == B) {
+            return root;
+        }
+        TreeNode left = lowestCommonAncestor(root.left, A, B);
+        TreeNode right = lowestCommonAncestor(root.right, A, B);
+        if (left != null && right != null) {//A和B分散在两棵子树
+            return root;
+        } else {
+            return left != null ? left : right;
+        }
     }
 
 }
