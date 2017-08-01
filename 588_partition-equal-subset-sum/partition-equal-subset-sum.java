@@ -1,45 +1,29 @@
 public class Solution {
-    /**
-     * @param nums a non-empty array only positive integers
-     * @return return true if can partition or false
-     */
     public boolean canPartition(int[] nums) {
-        // Write your code here
-        int n = nums.length;
+        //这个动态规划思路比较巧，因为最大和不超过20000，计算每个和是否能达到。
+        //但是觉得还是会超时，可以再优化
+        int len = nums.length;
         int sum = 0;
-        int max = Integer.MIN_VALUE;
-        for (int num : nums) {
-            sum += num;
-            max = Math.max(max, num);
+        for(int i = 0; i < len ; i++ ){
+            sum += nums[i];
         }
-        if (sum % 2 == 1 || max > sum / 2) {
+        if(sum % 2 == 1){
             return false;
         }
-
-        return helper(nums, sum / 2, 0, 0);
-    }
-
-    public boolean helper(int[] nums, int target, int sum, int i) {//检查数组中是否能找到一组数，和为target
-        if (i == nums.length) {
-            return false;
-        }
-        //sum < target
-        sum += nums[i];
-        if (sum == target) {
-            return true;
-        } else if (sum > target) {
-            sum -= nums[i];
-            return helper(nums, target, sum, i + 1);
-        } else {
-            if (!helper(nums, target, sum, i + 1)) {
-                sum -= nums[i];
-                return helper(nums, target, sum, i + 1);
-            } else {
-                return true;
+        sum /= 2;
+        boolean [] dp = new boolean[20000];
+        for(int i = 0; i <=sum ; i ++)
+            dp[i] = false;
+        dp[0] = true;
+        for(int i = 0; i < len; i++){
+            for(int j= sum ; j >= nums[i]; j--){
+                dp[j] |= dp[j - nums[i]];
             }
         }
+        return dp[sum];
     }
 }
+
 // Given a non-empty array containing only positive integers, find if the array can be partitioned into two subsets
 // such that the sum of elements in both subsets is equal.
 //
