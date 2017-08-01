@@ -11,13 +11,19 @@ public class Solution {
             return false;
         }
         sum /= 2;
-        boolean [] dp = new boolean[20000];
+        boolean [] dp = new boolean[10000];
         for(int i = 0; i <=sum ; i ++)
             dp[i] = false;
         dp[0] = true;
+
+        int sum1 = 0;
         for(int i = 0; i < len; i++){
-            for(int j= sum ; j >= nums[i]; j--){
+            sum1 += nums[i];
+            for(int j= sum1 ; j >= nums[i]; j--){
                 dp[j] |= dp[j - nums[i]];
+            }
+            if (dp[sum]) {
+                return true;
             }
         }
         return dp[sum];
