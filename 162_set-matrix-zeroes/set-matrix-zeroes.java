@@ -5,17 +5,57 @@ public class Solution {
      */
     public void setZeroes(int[][] matrix) {
         // write your code here
-        int m = matrix.length;
-        int n = matrix[0].length;
+        //充分利用参数的数组空间来保存条件。
+        if(matrix == null || matrix.length == 0)
+            return;
 
-        //m+n
-        Set<Integer> xset = new HashSet();
-        Set<Integer> yset = new HashSet();
-        for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n; j++) {
-                if
+        int rows = matrix.length;
+        int cols = matrix[0].length;
+
+        boolean empty_row0 = false;
+        boolean empty_col0 = false;
+        for(int i = 0; i < cols; i++){
+            if(matrix[0][i] == 0){
+                empty_row0 = true;
+                break;
             }
         }
+
+        for(int i = 0; i < rows; i++){
+            if(matrix[i][0] == 0){
+                empty_col0 = true;
+                break;
+            }
+        }
+
+        for(int i = 1; i < rows; i++) {
+            for(int j =1; j<cols; j++){
+                if(matrix[i][j] == 0){
+                    matrix[0][j] = 0;
+                    matrix[i][0] = 0;
+                }
+            }
+        }
+
+        for(int i = 1; i<rows; i++) {
+            for (int j=1; j< cols; j++) {
+                if(matrix[0][j] == 0 || matrix[i][0] == 0)
+                    matrix[i][j] = 0;
+            }
+        }
+
+        if(empty_row0){
+            for(int i = 0; i < cols; i++){
+                matrix[0][i] = 0;
+            }
+        }
+
+        if(empty_col0){
+            for(int i = 0; i < rows; i++){
+                matrix[i][0] = 0;
+            }
+        }
+
 
     }
 }
