@@ -5,7 +5,23 @@ public class Solution {
 	 */
     public int singleNumberII(int[] A) {
         // write your code here
-        int[]
+        if (A == null || A.length == 0) {
+            return -1;
+        }
+        int[] bits = new int[32];
+        for (int num : A) {
+            for (int i = 0; i < 32; i++) {
+                bits[i] += num >> i & 1;
+                bits[i] %= 3;
+            }
+        }
+
+        int result = 0;
+        for (int i = 31; i >= 0; i--) {
+            result = result << 1;
+            result += bits[i];
+        }
+        return result;
     }
 }
 
