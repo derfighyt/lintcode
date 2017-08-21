@@ -23,9 +23,11 @@ public class Solution {
         int mid = head.val;//head节点直接作为中值
         ListNode left = new ListNode(0);
         ListNode right = new ListNode(0);
+        ListNode middle = new ListNode(0);
 
         ListNode l = left;
         ListNode r = right;
+        ListNode m = middle;
         ListNode node = head;
         while (node != null) {
             if (node.val < mid) {
@@ -33,18 +35,33 @@ public class Solution {
                 node = node.next;
                 l = l.next;
                 l.next = null;
-            } else {
+            } else if (node.val > mid) {
                 r.next = node;
                 node = node.next;
                 r = r.next;
                 r.next = null;
+            } else {
+                m.next = node;
+                node = node.next;
+                m = m.next;
+                m.next = null;
             }
         }
 
         ListNode x = sortList(left.next);
         ListNode y = sortList(right.next);
-        x.next = y;
-        return x;
+        if (x != null) {
+            ListNode z = x;
+            while (z.next != null) {
+                z = z.next;
+            }
+            z.next = middle.next;
+            m.next = y;
+            return x;
+        } else {
+            m.next = y;
+            return middle.next;
+        }
     }
 }
 // 在 O(n log n) 时间复杂度和常数级的空间复杂度下给链表排序。
